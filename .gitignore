@@ -1,4 +1,5 @@
 *.sqlite3*
+plugin.msgpackz
 graphify-out
 .idea
 .serena
