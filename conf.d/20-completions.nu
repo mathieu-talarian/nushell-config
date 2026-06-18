@@ -5,7 +5,9 @@ if ((which carapace | is-empty) == false) {
     $env.CARAPACE_LENIENT = "1"
 
     let carapace_completer = {|spans|
-        # Workaround: completions don't work for aliases (nushell#8483)
+        # Workaround: completions don't work for aliases (nushell#8483).
+        # Expand the FULL alias (not just its head) so multi-word aliases like
+        # `gco = git checkout` complete with branch names, not git subcommands.
         let expanded_alias = (
             scope aliases
             | where name == $spans.0
@@ -13,14 +15,14 @@ if ((which carapace | is-empty) == false) {
         )
 
         let spans = if $expanded_alias != null {
-            let first = (
+            let expanded = (
                 $expanded_alias
+                | str replace -r '^\^' ''   # drop leading caret from `^cmd`
                 | split row " "
-                | first
-                | str replace --all "^" ""
+                | where {|w| ($w | str trim) != "" }
             )
 
-            $spans | skip 1 | prepend $first
+            $spans | skip 1 | prepend $expanded
         } else {
             $spans
         }

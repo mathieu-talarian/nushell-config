@@ -56,6 +56,7 @@ alias gp = ^git push
 alias gf = ^git fetch
 alias gfa = ^git fetch --all --tags --prune --jobs=10
 alias gco = ^git checkout
+alias gcl = ^git clone
 alias gcb = ^git checkout -b
 alias gsw = ^git switch
 alias gswc = ^git switch --create
