@@ -1,31 +1,27 @@
 # ~/.config/nushell/conf.d/41-docker.nu
-# Note: flags passed to a custom command must be quoted ("-d", "--build"),
-# otherwise Nu parses them as flags of __docker_compose itself.
+# docker compose shortcuts as aliases, so carapace can complete them
+# (typing `dcup <tab>` expands to `docker compose up <tab>`).
+#
+# Target is the `docker compose` plugin (Compose v2, the current standard).
+# If you land on a machine that only has the legacy standalone `docker-compose`,
+# replace `^docker compose` with `^docker-compose` throughout this file.
 
-def __docker_compose [...args: string] {
-    if ((which docker-compose | is-empty) == false) {
-        ^docker-compose ...$args
-    } else {
-        ^docker compose ...$args
-    }
-}
-
-def dco [...args: string] { __docker_compose ...$args }
-def dcb [...args: string] { __docker_compose build ...$args }
-def dce [...args: string] { __docker_compose exec ...$args }
-def dcps [...args: string] { __docker_compose ps ...$args }
-def dcrestart [...args: string] { __docker_compose restart ...$args }
-def dcrm [...args: string] { __docker_compose rm ...$args }
-def dcr [...args: string] { __docker_compose run ...$args }
-def dcstop [...args: string] { __docker_compose stop ...$args }
-def dcup [...args: string] { __docker_compose up ...$args }
-def dcupb [...args: string] { __docker_compose up "--build" ...$args }
-def dcupd [...args: string] { __docker_compose up "-d" ...$args }
-def dcupdb [...args: string] { __docker_compose up "-d" "--build" ...$args }
-def dcdn [...args: string] { __docker_compose down ...$args }
-def dcl [...args: string] { __docker_compose logs ...$args }
-def dclf [...args: string] { __docker_compose logs "-f" ...$args }
-def dclF [...args: string] { __docker_compose logs "-f" "--tail" "0" ...$args }
-def dcpull [...args: string] { __docker_compose pull ...$args }
-def dcstart [...args: string] { __docker_compose start ...$args }
-def dck [...args: string] { __docker_compose kill ...$args }
+alias dco = ^docker compose
+alias dcb = ^docker compose build
+alias dce = ^docker compose exec
+alias dcps = ^docker compose ps
+alias dcrestart = ^docker compose restart
+alias dcrm = ^docker compose rm
+alias dcr = ^docker compose run
+alias dcstop = ^docker compose stop
+alias dcup = ^docker compose up
+alias dcupb = ^docker compose up --build
+alias dcupd = ^docker compose up -d
+alias dcupdb = ^docker compose up -d --build
+alias dcdn = ^docker compose down
+alias dcl = ^docker compose logs
+alias dclf = ^docker compose logs -f
+alias dclF = ^docker compose logs -f --tail 0
+alias dcpull = ^docker compose pull
+alias dcstart = ^docker compose start
+alias dck = ^docker compose kill

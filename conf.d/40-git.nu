@@ -83,9 +83,7 @@ def gcm [] {
     ^git checkout (git_main_branch)
 }
 
-def gcd [] {
-    ^git checkout dev
-}
+alias gcd = ^git checkout dev
 
 def ggp [] {
     ^git push origin (git_current_branch)
