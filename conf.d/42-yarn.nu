@@ -1,0 +1,40 @@
+# ~/.config/nushell/conf.d/42-yarn.nu
+
+alias y = ^yarn
+alias ya = ^yarn add
+alias yad = ^yarn add --dev
+alias yap = ^yarn add --peer
+alias yb = ^yarn build
+alias ycc = ^yarn cache clean
+alias yd = ^yarn dev
+alias yf = ^yarn format
+alias yh = ^yarn help
+alias yi = ^yarn init
+alias yin = ^yarn install
+alias yln = ^yarn lint
+alias ylnf = ^yarn lint --fix
+alias yp = ^yarn pack
+alias yrm = ^yarn remove
+alias yrun = ^yarn run
+alias ys = ^yarn serve
+alias yst = ^yarn start
+alias yt = ^yarn test
+alias ytc = ^yarn test --coverage
+alias yui = ^yarn upgrade-interactive
+alias yup = ^yarn upgrade
+alias yv = ^yarn version
+alias yw = ^yarn workspace
+alias yws = ^yarn workspaces
+alias yy = ^yarn why
+
+alias yuil = ^yarn upgrade-interactive --latest
+alias yii = ^yarn install --frozen-lockfile
+alias yifl = ^yarn install --frozen-lockfile
+alias yga = ^yarn global add
+alias ygls = ^yarn global list
+alias ygrm = ^yarn global remove
+alias ygu = ^yarn global upgrade
+alias yls = ^yarn list
+alias yout = ^yarn outdated
+alias ydlx = ^yarn dlx
+alias yn = ^yarn node

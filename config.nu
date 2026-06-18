@@ -1,0 +1,19 @@
+# ~/.config/nushell/config.nu
+# Bootstrap: source modular config from conf.d/ in deterministic order.
+
+source ($nu.default-config-dir | path join "conf.d" | path join "00-core.nu")
+source ($nu.default-config-dir | path join "conf.d" | path join "10-env.nu")
+source ($nu.default-config-dir | path join "conf.d" | path join "15-starship.nu")
+source ($nu.default-config-dir | path join "conf.d" | path join "16-zoxide.nu")
+source ($nu.default-config-dir | path join "conf.d" | path join "17-atuin.nu")
+source ($nu.default-config-dir | path join "conf.d" | path join "18-direnv.nu")
+source ($nu.default-config-dir | path join "conf.d" | path join "20-completions.nu")
+source ($nu.default-config-dir | path join "conf.d" | path join "21-native-completions.nu")
+source ($nu.default-config-dir | path join "conf.d" | path join "30-aliases.nu")
+source ($nu.default-config-dir | path join "conf.d" | path join "40-git.nu")
+source ($nu.default-config-dir | path join "conf.d" | path join "41-docker.nu")
+source ($nu.default-config-dir | path join "conf.d" | path join "42-yarn.nu")
+source ($nu.default-config-dir | path join "conf.d" | path join "43-lol.nu")
+source ($nu.default-config-dir | path join "conf.d" | path join "50-fzf.nu")
+source ($nu.default-config-dir | path join "conf.d" | path join "60-theme.nu")
+source ($nu.default-config-dir | path join "conf.d" | path join "99-local.nu")
