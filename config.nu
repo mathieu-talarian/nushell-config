@@ -7,6 +7,7 @@ source ($nu.default-config-dir | path join "conf.d" | path join "15-starship.nu"
 source ($nu.default-config-dir | path join "conf.d" | path join "16-zoxide.nu")
 source ($nu.default-config-dir | path join "conf.d" | path join "17-atuin.nu")
 source ($nu.default-config-dir | path join "conf.d" | path join "18-direnv.nu")
+source ($nu.default-config-dir | path join "conf.d" | path join "19-plugins.nu")
 source ($nu.default-config-dir | path join "conf.d" | path join "20-completions.nu")
 source ($nu.default-config-dir | path join "conf.d" | path join "21-native-completions.nu")
 source ($nu.default-config-dir | path join "conf.d" | path join "30-aliases.nu")
