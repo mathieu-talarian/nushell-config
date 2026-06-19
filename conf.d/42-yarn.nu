@@ -29,7 +29,6 @@ alias yy = ^yarn why
 
 alias yuil = ^yarn upgrade-interactive --latest
 alias yii = ^yarn install --frozen-lockfile
-alias yifl = ^yarn install --frozen-lockfile
 alias yga = ^yarn global add
 alias ygls = ^yarn global list
 alias ygrm = ^yarn global remove

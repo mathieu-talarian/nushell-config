@@ -25,14 +25,13 @@ def --env path-prepend [p: path] {
     )
 }
 
-def --env path-append [p: path] {
-    let p = ($p | path expand)
-
-    $env.PATH = (
-        $env.PATH
-        | where {|x| ($x | path expand) != $p }
-        | append $p
-    )
+# Write a tool's init output into Nu's vendor autoload dir. Those files load
+# AFTER config.nu, so PATH from 10-env.nu is ready. No-op if the tool is absent.
+def vendor-autoload [name: string, init: closure] {
+    if (which $name | is-empty) { return }
+    let dest = ($nu.data-dir | path join "vendor" "autoload" $"($name).nu")
+    mkdir ($dest | path dirname)
+    do $init | save -f $dest
 }
 
 def env-prepend-string [current: any, value: string] {
@@ -42,16 +41,6 @@ def env-prepend-string [current: any, value: string] {
         $value
     } else {
         [$value $existing] | str join (char esep)
-    }
-}
-
-def env-append-string [current: any, value: string] {
-    let existing = ($current | default "")
-
-    if ($existing | is-empty) {
-        $value
-    } else {
-        [$existing $value] | str join (char esep)
     }
 }
 

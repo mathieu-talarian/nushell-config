@@ -67,12 +67,8 @@ if (($env.PYENV_ROOT | path join "bin") | path exists) {
     path-prepend ($env.PYENV_ROOT | path join "bin")
 }
 
-if ((which pyenv | is-empty) == false) {
-    let pyenv_root = (^pyenv root | str trim)
-    path-prepend ($pyenv_root | path join "shims")
-} else {
-    path-prepend ($env.PYENV_ROOT | path join "shims")
-}
+# `pyenv root` just echoes $PYENV_ROOT, which we already set — skip the subprocess.
+path-prepend ($env.PYENV_ROOT | path join "shims")
 
 # Local binaries
 path-prepend ($env.HOME | path join ".local" | path join "bin")
