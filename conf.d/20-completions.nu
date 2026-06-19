@@ -5,6 +5,8 @@ if ((which carapace | is-empty) == false) {
     $env.CARAPACE_LENIENT = "1"
 
     let carapace_completer = {|spans|
+        # TEMP DEBUG: log raw spans nushell passes in. Remove after diagnosis.
+        $"(date now | format date '%H:%M:%S') raw=($spans | to json -r)\n" | save -a /tmp/nu-completer-debug.log
         # Workaround: completions don't work for aliases (nushell#8483).
         # Expand the FULL alias (not just its head) so multi-word aliases like
         # `gco = git checkout` complete with branch names, not git subcommands.
