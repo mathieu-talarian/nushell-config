@@ -98,3 +98,32 @@ def --wrapped claude-awg [...args] {
     ^claude ...$args
   }
 }
+
+# you-should-use: nag when you type a command that a shorter alias covers.
+# Port of zsh-you-should-use. Matches the typed line against alias expansions;
+# suggests the shortest-to-type alias whose expansion is a prefix of the line.
+def _alias_hint [line: string] {
+    let line = ($line | str trim)
+    if ($line | is-empty) { return null }
+    scope aliases
+    | each {|a|
+        let exp = ($a.expansion | str replace -r '^\^' '' | str trim)
+        if (($line == $exp) or ($line | str starts-with $"($exp) ")) and (($a.name | str length) < ($exp | str length)) {
+            {name: $a.name, len: ($exp | str length)}
+        }
+    }
+    | compact
+    | sort-by len --reverse
+    | get -o 0.name
+}
+
+# Append (don't clobber) — atuin/etc. may already register pre_execution hooks.
+$env.config.hooks.pre_execution = (
+    $env.config.hooks.pre_execution? | default []
+    | append {||
+        let hint = (_alias_hint (commandline))
+        if $hint != null {
+            print $"(ansi yellow)💡 alias for that: (ansi yellow_bold)($hint)(ansi reset)"
+        }
+    }
+)

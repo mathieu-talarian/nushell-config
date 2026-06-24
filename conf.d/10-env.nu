@@ -89,3 +89,8 @@ path-prepend ($env.BUN_INSTALL | path join "bin")
 
 # rebar3
 path-prepend ($env.HOME | path join ".cache" | path join "rebar3" | path join "bin")
+
+# Google Cloud SDK (zsh did this via path.zsh.inc). gcloud/gsutil/bq
+# completions come from carapace (20-completions.nu) once they're on PATH.
+let gcloud_bin = ($env.HOME | path join "google-cloud-sdk" | path join "bin")
+if ($gcloud_bin | path exists) { path-prepend $gcloud_bin }
