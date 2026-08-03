@@ -1,10 +1,10 @@
 # ~/.config/nushell/conf.d/30-aliases.nu
 
-alias ls = ^eza --color=auto
 alias l = ^eza
-alias ll = ^eza -la
+alias ll = ^eza -la --color=auto --long
 alias la = ^eza -lAh
 alias lsa = ^eza -lah
+alias lt = ^eza --color=auto --tree
 
 alias grep = ^grep --color=auto
 alias pip = ^pip3
