@@ -22,31 +22,17 @@ def zshconfig [] {
     run-external ($env.EDITOR? | default "nvim") ($env.HOME | path join ".zshrc")
 }
 
-def checkup [] {
-    ^sudo apt update
-}
-
-def up [] {
-    ^sudo apt update
-    if $env.LAST_EXIT_CODE == 0 {
-        ^sudo apt upgrade -y
-    }
-}
-
-def upnup [] {
-    ^sudo apt update
-    if $env.LAST_EXIT_CODE == 0 {
-        ^sudo apt full-upgrade -y
-    }
-}
+# System updates via topgrade (macOS)
+alias checkup = ^topgrade --dry-run
+alias up = ^topgrade
+alias upnup = ^topgrade --yes --cleanup
 
 def cleanup [] {
-    ^sudo apt autoremove -y
+    ^brew cleanup --prune=all
+    ^brew autoremove
 }
 
-def psqlstart [] {
-    ^sudo systemctl start postgresql.service
-}
+alias psqlstart = ^brew services start postgresql
 
 def npmnuke [] {
     print "Deleting **/node_modules/"
