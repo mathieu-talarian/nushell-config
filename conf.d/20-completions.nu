@@ -4,7 +4,12 @@
 if ((which carapace | is-empty) == false) {
     $env.CARAPACE_LENIENT = "1"
 
-    let carapace_completer = {|spans|
+    # nu >= 0.116: completers receive named inputs (token/place/buffer);
+    # `$place.command` is the token list of the command being completed.
+    let carapace_completer = {|place|
+        let spans = $place.command
+        if ($spans | is-empty) { return null }
+
         # Workaround: completions don't work for aliases (nushell#8483).
         # Expand the FULL alias (not just its head) so multi-word aliases like
         # `gco = git checkout` complete with branch names, not git subcommands.
