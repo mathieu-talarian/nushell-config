@@ -1,8 +1,5 @@
 # ~/.config/nushell/conf.d/10-env.nu
 
-$env.EDITOR = "nvim"
-$env.PAGER = "bat"
-
 $env.DOCKER_BUILDKIT = "1"
 $env.COMPOSE_DOCKER_CLI_BUILD = "1"
 
@@ -94,3 +91,14 @@ path-prepend ($env.HOME | path join ".cache" | path join "rebar3" | path join "b
 # completions come from carapace (20-completions.nu) once they're on PATH.
 let gcloud_bin = ($env.HOME | path join "google-cloud-sdk" | path join "bin")
 if ($gcloud_bin | path exists) { path-prepend $gcloud_bin }
+
+# Editor / pager: prefer nvim + bat, fall back to what a bare system ships
+# (minimal Fedora images have vi + more, not even less). Resolved LAST: on
+# macOS, brew's bin dir (where nvim/bat live) is only on PATH after the
+# Homebrew block above.
+def first-available [candidates: list<string>, fallback: string] {
+    $candidates | where {|c| which $c | is-not-empty } | get -o 0 | default $fallback
+}
+$env.EDITOR = (first-available [nvim vim vi] "vi")
+$env.PAGER = (first-available [bat less more] "more")
+$env.config.buffer_editor = $env.EDITOR

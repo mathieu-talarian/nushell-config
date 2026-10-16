@@ -22,17 +22,32 @@ def zshconfig [] {
     run-external ($env.EDITOR? | default "nvim") ($env.HOME | path join ".zshrc")
 }
 
-# System updates via topgrade (macOS)
+# System updates via topgrade (detects brew on macOS; dnf, flatpak, … on Fedora)
 alias checkup = ^topgrade --dry-run
 alias up = ^topgrade
 alias upnup = ^topgrade --yes --cleanup
 
+# Prune package caches and orphaned deps with whichever managers exist
+# (brew on macOS / Linuxbrew, dnf on Fedora — dnf asks before removing).
 def cleanup [] {
-    ^brew cleanup --prune=all
-    ^brew autoremove
+    if (which brew | is-not-empty) {
+        ^brew cleanup --prune=all
+        ^brew autoremove
+    }
+    if (which dnf | is-not-empty) {
+        ^sudo dnf autoremove
+        ^sudo dnf clean all
+    }
 }
 
-alias psqlstart = ^brew services start postgresql
+# Start PostgreSQL: Homebrew service on macOS, systemd unit on Linux.
+def psqlstart [] {
+    if $nu.os-info.name == "macos" {
+        ^brew services start postgresql
+    } else {
+        ^sudo systemctl start postgresql
+    }
+}
 
 def npmnuke [] {
     print "Deleting **/node_modules/"

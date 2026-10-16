@@ -15,3 +15,6 @@ local.nu
 .env.*
 *.pem
 *.key
+
+# Generated per machine by vendor-autoload (00-core.nu); holds host paths
+vendor/

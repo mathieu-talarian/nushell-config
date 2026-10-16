@@ -2,7 +2,6 @@
 # Core settings + helper commands used by the other conf.d files.
 
 $env.config.show_banner = false
-$env.config.buffer_editor = "nvim"
 $env.config.edit_mode = "emacs"
 
 $env.config.history = {
