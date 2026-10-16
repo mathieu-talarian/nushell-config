@@ -3,3 +3,15 @@ plugin.msgpackz
 graphify-out
 .idea
 .serena
+
+# macOS junk
+.DS_Store
+
+# Private, machine-specific config (secrets live here) — see conf.d/99-local.nu
+local.nu
+
+# Secrets / env files, defensively
+.env
+.env.*
+*.pem
+*.key
