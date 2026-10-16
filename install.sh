@@ -70,8 +70,8 @@ install_nushell() {
     # official nushell repo (https://www.nushell.sh/book/installation.html).
     info "Installing nushell >= $MIN_NU_VERSION from the official nushell repo"
     add_repo_file gemfury-nushell https://yum.fury.io/nushell/
-    as_root dnf install -y nushell >/dev/null
-    as_root dnf upgrade -y nushell >/dev/null 2>&1 || true
+    as_root dnf install -q -y nushell >/dev/null
+    as_root dnf upgrade -q -y nushell >/dev/null 2>&1 || true
     current="$(nu --version)"
     version_ge "$current" "$MIN_NU_VERSION" \
         || die "nushell $current is older than $MIN_NU_VERSION"
@@ -162,6 +162,8 @@ validate_config() {
 set_login_shell() {
     local nu_path current
     nu_path="$(command -v nu)"
+    # Prefer the canonical /usr/bin path (on Fedora /usr/sbin aliases /usr/bin).
+    if [ -x /usr/bin/nu ] && [ /usr/bin/nu -ef "$nu_path" ]; then nu_path=/usr/bin/nu; fi
     current="$(getent passwd "$(id -un)" | cut -d: -f7)"
     if [ "$current" = "$nu_path" ]; then
         ok "login shell is already $nu_path"
