@@ -18,17 +18,31 @@ won't load until you add a matching `source` line to `config.nu`.
 
 ## Completions
 - External: **carapace** (`conf.d/20-completions.nu`), alias-aware — expands the
-  full alias, so `gco<tab>` completes branch names. Update: `brew upgrade carapace`.
+  full alias, so `gco<tab>` completes branch names. Update: `brew upgrade carapace`
+  (macOS) / `sudo dnf upgrade carapace-bin` (Fedora).
 - Native nu_scripts files in `conf.d/completions/` auto-load via the generated
   `_loader.nu` (never hand-edit it). Manage with `completions-add <tool>`,
   `completions-remove <tool>`, `completions-update`, `completions-reload`.
   Recovery if a stale ref breaks startup: `nu conf.d/completions/_regen.nu`.
 
+## Platforms: macOS + Fedora
+- Same files on both. Branch on `$nu.os-info.name` (`"macos"`/`"linux"`) only
+  where a path really differs (pnpm home, `psqlstart`); otherwise probe tools
+  with `which` at runtime (`cleanup`, EDITOR/PAGER) — never assume brew.
+- `vendor/autoload/` is generated per machine by `vendor-autoload` into
+  `$nu.data-dir` (the config dir on macOS, `~/.local/share/nushell` on Linux)
+  and holds host paths — git-ignored, never commit it.
+- Fedora setup is automated by `install.sh` (`curl … | bash`, see README):
+  nushell >= 0.116 (Fedora's own package is too old, 0.99), dnf tools, starship
+  (COPR atim/starship), carapace (`carapace-bin`, yum.fury.io/rsteube), clone,
+  plugins, login shell. Keep it in sync when the config gains a tool dependency.
+
 ## Plugins
 - Core plugins (polars, gstat, formats, query, inc) ship **prebuilt** with
   Homebrew's `nushell`. Register from `/opt/homebrew/bin/nu_plugin_*` — never
   `cargo install` them (fails on a rust nightly toolchain; polars is a huge
-  compile). Registered plugins persist and auto-load in new shells; no
+  compile). On Fedora the nushell RPM ships them in `/usr/libexec/nushell/`.
+  Registered plugins persist and auto-load in new shells; no
   `plugin use` line needed in config.
 - Gotcha: `plugin add` stores the resolved Cellar path
   (`.../nushell/<version>/bin/...`), so `brew upgrade nushell` dangles every
